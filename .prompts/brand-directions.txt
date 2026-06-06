@@ -1,0 +1,5 @@
+DIRECTION 1: Full-viewport hero with sticky horizontal nav, card-based service grid below — Condensed sans-serif headlines paired with light geometric body type — Deep charcoal (#1C1C1E) + warm sand (#D4C5A9) + terracotta accent (#C4623A) — Grounded, efficient, no-nonsense
+
+DIRECTION 2: Diagonal section splits with overlapping content blocks, asymmetric two-column hero — Oversized italic serif headlines contrasted with tight monospace labels — Dusty teal (#3D7A72) + off-white (#F5F0E8) + burnt sienna (#A0522D) + dark espresso (#1A0F0A) — Adventurous, sun-worn, travel-worn credibility
+
+DIRECTION 3: Centered editorial layout with generous whitespace, single-column narrative scroll, fixed side-rail contact CTA — Refined thin-weight serif throughout, tracked uppercase subheadings — Slate (#4A5568) + pale stone (#E8E2D9) + muted sage (#8FA68E) + ink black (#111111) — Calm, premium, paperwork-made-effortless
