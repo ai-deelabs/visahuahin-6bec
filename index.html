@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VisaHuaHin — บริการวีซ่ารันและบอร์เดอร์รัน หัวหิน</title>
+<meta name="description" content="บริการวีซ่ารัน บอร์เดอร์รัน หัวหิน สะดวก รวดเร็ว เชื่อถือได้ สำหรับชาวต่างชาติในประเทศไทย">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.460.0"></script>
+<style>
+/* ── Reset & Base ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --slate: #4A5568;
+  --stone: #E8E2D9;
+  --sage: #8FA68E;
+  --ink: #111111;
+  --ink-soft: #2D2D2D;
+  --stone-dark: #D5CBBF;
+  --stone-light: #F4F0EB;
+  --sage-light: #B8CCBB;
+  --sage-dark: #6B8A6A;
+  --white: #FAFAF8;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'IBM Plex Sans Thai', 'Sukhumvit Set', 'Inter', sans-serif;
+  --transition: 0.35s ease-out;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--ink);
+  background: var(--white);
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+}
+
+img { display: block; width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ── Typography ──────────────────────────────────────── */
+.serif { font-family: var(--font-serif); }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+}
+
+/* ── Layout ──────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.container--wide {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ── Navbar ──────────────────────────────────────────── */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+}
+
+#navbar.scrolled {
+  background: rgba(250, 250, 248, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+
+.nav-logo {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.nav-logo span {
+  color: var(--sage-dark);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-links {
+  display: none;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate);
+  transition: color var(--transition);
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.lang-sw {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--slate);
+  transition: color var(--transition);
+  letter-spacing: 0.04em;
+}
+
+.lang-sw:hover { color: var(--ink); }
+.lang-sw svg { flex-shrink: 0; }
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform var(--transition), opacity var(--transition);
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile menu */
+#mobile-menu {
+  position: fixed;
+  top: 0; right: -100%;
+  width: min(320px, 85vw);
+  height: 100vh;
+  background: var(--white);
+  z-index: 99;
+  padding: 5rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: -4px 0 30px rgba(0,0,0,0.08);
+  transition: right 0.4s ease-out;
+}
+
+#mobile-menu.open { right: 0; }
+
+#mobile-menu a {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--ink);
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--stone);
+  display: block;
+  letter-spacing: 0.02em;
+  transition: color var(--transition);
+}
+
+#mobile-menu a:hover { color: var(--sage-dark); }
+
+#menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 98;
+}
+
+#menu-overlay.open { display: block; }
+
+/* ── Side Rail CTA ───────────────────────────────────── */
+#side-rail {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#side-rail.visible { opacity: 1; }
+
+.rail-btn {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  transition: padding var(--transition), opacity var(--transition);
+}
+
+.rail-btn:first-child {
+  background: var(--ink);
+  border-radius: 8px 0 0 0;
+}
+
+.rail-btn:last-child {
+  background: var(--sage-dark);
+  border-radius: 0 0 0 8px;
+}
+
+.rail-btn:hover { padding: 1.1rem 0.9rem; }
+
+.rail-btn svg { flex-shrink: 0; }
+
+@media (max-width: 767px) {
+  #side-rail { display: none; }
+}
+
+/* ── Hero ────────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 5rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+#hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&h=900&fit=crop');
+  background-size: cover;
+  background-position: center 40%;
+  opacity: 0.38;
+  transform: scale(1.06);
+  transition: transform 12s ease-out;
+  will-change: transform;
+}
+
+#hero-bg.loaded { transform: scale(1); }
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sage-light);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--sage-light);
+}
+
+#hero h1 {
+  font-size: clamp(2.4rem, 8vw, 4.2rem);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+#hero h1 em {
+  font-style: italic;
+  color: var(--stone);
+}
+
+.hero-sub {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(250,250,248,0.72);
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--sage-dark);
+  color: var(--white);
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-primary:hover {
+  background: var(--sage);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(107,138,106,0.35);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(250,250,248,0.82);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(250,250,248,0.3);
+  padding-bottom: 0.1rem;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.btn-ghost:hover {
+  color: var(--white);
+  border-color: rgba(250,250,248,0.7);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(250,250,248,0.4);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: bounce 2.2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(5px); }
+}
+
+/* ── Section Base ────────────────────────────────────── */
+section { padding: 5rem 0; }
+
+.section-intro {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-intro h2 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 400;
+  margin-top: 0.6rem;
+  line-height: 1.5;
+  padding-top: 0.2rem;
+}
+
+/* ── Narrative / Intro ───────────────────────────────── */
+#intro {
+  background: var(--stone-light);
+  clip-path: polygon(0 0, 100% 0, 100% 94%, 50% 100%, 0 94%);
+  padding-bottom: 8rem;
+}
+
+.intro-lede {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 3.5vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.intro-lede em { font-style: italic; color: var(--sage-dark); }
+
+.intro-body {
+  font-size: 0.95rem;
+  line-height: 1.95;
+  color: var(--slate);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Services (Accordion) ────────────────────────────── */
+#services { background: var(--white); }
+
+.accordion {
+  border-top: 1px solid var(--stone-dark);
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--stone-dark);
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5rem 0;
+  text-align: left;
+  gap: 1rem;
+}
+
+.accordion-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.accordion-num {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--sage);
+  min-width: 1.5rem;
+  padding-top: 0.15rem;
+}
+
+.accordion-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.accordion-icon {
+  flex-shrink: 0;
+  color: var(--slate);
+  transition: transform var(--transition);
+}
+
+.accordion-item.open .accordion-icon {
+  transform: rotate(45deg);
+}
+
+.accordion-body {
+  display: none;
+  padding: 0 0 1.8rem 2.7rem;
+}
+
+.accordion-item.open .accordion-body { display: block; }
+
+.accordion-body p {
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--slate);
+  margin-bottom: 1rem;
+}
+
+.accordion-body ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.accordion-body ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--slate);
+  line-height: 1.7;
+}
+
+.accordion-body ul li::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--sage);
+  margin-top: 0.65em;
+  flex-shrink: 0;
+}
+
+/* ── How It Works ────────────────────────────────────── */
+#process {
+  background: var(--stone);
+  clip-path: polygon(0 3%, 50% 0, 100% 3%, 100% 97%, 50% 100%, 0 97%);
+  padding: 8rem 0;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  left: 1.25rem;
+  top: 2rem;
+  bottom: 2rem;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--sage-light), var(--sage-light), transparent);
+}
+
+.step {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem 0;
+  align-items: flex-start;
+  position: relative;
+}
+
+.step-num {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--sage-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--sage-dark);
+  position: relative;
+  z-index: 1;
+}
+
+.step-content h3 {
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.step-content p {
+  font-size: 0.88rem;
+  line-height: 1.9;
+  color: var(--slate);
+}
+
+/* ── Why Choose ──────────────────────────────────────── */
+#why { background: var(--white); }
+
+.why-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.why-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.why-img {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+}
+
+.why-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.why-item:hover .why-img img { transform: scale(1.03); }
+
+.why-text .label { margin-bottom: 0.8rem; }
+
+.why-text h3 {
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  font-weight: 400;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.why-text p {
+  font-size: 0.9rem;
+  line-height: 1.95;
+  color: var(--slate);
+}
+
+/* ── Destinations ─────────────────────────────────────── */
+#destinations {
+  background: var(--stone-light);
+}
+
+.dest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid var(--stone-dark);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dest-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  background: var(--white);
+  gap: 1rem;
+  transition: background var(--transition);
+}
+
+.dest-item:hover { background: var(--stone-light); }
+
+.dest-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dest-icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 8px;
+  background: var(--stone);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage-dark);
+  flex-shrink: 0;
+}
+
+.dest-name {
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.dest-sub {
+  font-size: 0.78rem;
+  color: var(--slate);
+  line-height: 1.5;
+  margin-top: 0.1rem;
+}
+
+.dest-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+  background: var(--stone);
+  padding: 0.5rem 0.8rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── Thai: strip letter-spacing & ensure safe padding ── */
+html[lang="th"] .label,
+html[lang="th"] .hero-eyebrow,
+html[lang="th"] .hero-scroll,
+html[lang="th"] .rail-btn,
+html[lang="th"] .dest-tag,
+html[lang="th"] .channel-btn,
+html[lang="th"] .nav-links a,
+html[lang="th"] .lang-sw,
+html[lang="th"] .btn-primary,
+html[lang="th"] .btn-ghost,
+html[lang="th"] #mobile-menu a {
+  letter-spacing: 0;
+}
+
+/* ── Testimonials ─────────────────────────────────────── */
+#testimonials {
+  background: var(--ink);
+  color: var(--white);
+}
+
+#testimonials .section-intro h2 { color: var(--white); }
+#testimonials .label { color: var(--sage-light); }
+
+.testi-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.testi-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(4px);
+  transition: background var(--transition), transform var(--transition);
+}
+
+.testi-card:hover {
+  background: rgba(255,255,255,0.09);
+  transform: translateY(-2px);
+}
+
+.testi-stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 1rem;
+  color: var(--sage-light);
+}
+
+.testi-text {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.8;
+  color: rgba(250,250,248,0.88);
+  margin-bottom: 1.2rem;
+}
+
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.testi-avatar {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--slate);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--stone);
+  flex-shrink: 0;
+}
+
+.testi-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--stone);
+  line-height: 1.4;
+}
+
+.testi-origin {
+  font-size: 0.76rem;
+  color: rgba(250,250,248,0.45);
+  line-height: 1.4;
+}
+
+/* ── FAQ ─────────────────────────────────────────────── */
+#faq { background: var(--white); }
+
+/* ── Contact / CTA ───────────────────────────────────── */
+#contact {
+  background: var(--stone);
+  clip-path: polygon(0 4%, 50% 0, 100% 4%, 100% 100%, 0 100%);
+  padding: 8rem 0 5rem;
+}
+
+.contact-wrap {
+  text-align: center;
+}
+
+.contact-wrap h2 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 400;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.contact-wrap p {
+  font-size: 0.95rem;
+  color: var(--slate);
+  line-height: 1.9;
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+}
+
+.contact-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.channel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.channel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.ch-line {
+  background: #06C755;
+  color: var(--white);
+}
+
+.ch-whatsapp {
+  background: #25D366;
+  color: var(--white);
+}
+
+.ch-phone {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.ch-email {
+  background: var(--white);
+  color: var(--ink);
+  border: 1.5px solid var(--stone-dark);
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+footer {
+  background: var(--ink);
+  color: rgba(250,250,248,0.5);
+  padding: 3rem 0 2rem;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.footer-logo span { color: var(--sage); }
+
+.footer-tagline {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  max-width: 340px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 1.5rem;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 0.8rem;
+  color: rgba(250,250,248,0.45);
+  transition: color var(--transition);
+}
+
+.footer-links a:hover { color: var(--white); }
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: rgba(250,250,248,0.25);
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  width: 100%;
+  text-align: center;
+}
+
+/* ── Scroll Reveal ───────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Desktop ─────────────────────────────────────────── */
+@media (min-width: 768px) {
+  body { font-size: 17px; }
+
+  .nav-links { display: flex; }
+  .hamburger { display: none; }
+
+  .why-item {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .why-item:nth-child(even) { flex-direction: row-reverse; }
+
+  .why-img {
+    flex: 0 0 48%;
+    aspect-ratio: 4/3;
+  }
+
+  .why-text { flex: 1; }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .contact-channels {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 640px;
+  }
+
+  .channel-btn { flex: 0 0 calc(50% - 0.5rem); }
+
+  .steps::before { left: 1.35rem; }
+}
+
+@media (min-width: 1024px) {
+  .testi-grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Visa<span>HuaHin</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#services" data-lang-th="บริการ" data-lang-en="Services">บริการ</a></li>
+      <li><a href="#process" data-lang-th="ขั้นตอน" data-lang-en="How It Works">ขั้นตอน</a></li>
+      <li><a href="#destinations" data-lang-th="ปลายทาง" data-lang-en="Destinations">ปลายทาง</a></li>
+      <li><a href="#contact" data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</a></li>
+    </ul>
+    <button class="lang-sw" aria-label="Switch language">
+      <i data-lucide="globe" width="14" height="14"></i>
+      <span class="lang-sw__label">TH</span>
+    </button>
+    <button class="hamburger" id="ham-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="menu-overlay"></div>
+<div id="mobile-menu">
+  <a href="#services" data-lang-th="บริการ" data-lang-en="Services">บริการ</a>
+  <a href="#process" data-lang-th="ขั้นตอน" data-lang-en="How It Works">ขั้นตอน</a>
+  <a href="#destinations" data-lang-th="ปลายทาง" data-lang-en="Destinations">ปลายทาง</a>
+  <a href="#why" data-lang-th="ทำไมต้องเรา" data-lang-en="Why Us">ทำไมต้องเรา</a>
+  <a href="#faq" data-lang-th="คำถามที่พบบ่อย" data-lang-en="FAQ">คำถามที่พบบ่อย</a>
+  <a href="#contact" data-lang-th="ติดต่อเรา" data-lang-en="Contact Us">ติดต่อเรา</a>
+</div>
+
+<!-- Side Rail CTA -->
+<div id="side-rail">
+  <a href="https://line.me/ti/p/~@visahuahin" class="rail-btn" target="_blank" rel="noopener">
+    <i data-lucide="message-circle" width="13" height="13"></i>
+    <span data-lang-th="LINE" data-lang-en="LINE">LINE</span>
+  </a>
+  <a href="#contact" class="rail-btn">
+    <i data-lucide="phone" width="13" height="13"></i>
+    <span data-lang-th="โทร" data-lang-en="Call">โทร</span>
+  </a>
+</div>
+
+<!-- Hero -->
+<section id="hero">
+  <div id="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow" data-lang-th="หัวหิน · ประเทศไทย" data-lang-en="Hua Hin · Thailand">หัวหิน · ประเทศไทย</p>
+    <h1 data-lang-th="วีซ่ารัน<br><em>ที่คุณวางใจได้</em>" data-lang-en="Visa Runs<br><em>Made Effortless</em>">วีซ่ารัน<br><em>ที่คุณวางใจได้</em></h1>
+    <p class="hero-sub" data-lang-th="บริการวีซ่ารันและบอร์เดอร์รันสำหรับชาวต่างชาติในหัวหิน ปลอดภัย ตรงเวลา และไม่ยุ่งยาก — เราดูแลทุกขั้นตอนเพื่อให้คุณอยู่ในประเทศไทยได้อย่างราบรื่น" data-lang-en="Professional visa run and border run services for foreigners in Hua Hin. Safe, punctual, and completely hassle-free — we handle every step so your stay in Thailand remains uninterrupted.">บริการวีซ่ารันและบอร์เดอร์รันสำหรับชาวต่างชาติในหัวหิน ปลอดภัย ตรงเวลา และไม่ยุ่งยาก — เราดูแลทุกขั้นตอนเพื่อให้คุณอยู่ในประเทศไทยได้อย่างราบรื่น</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <i data-lucide="calendar" width="16" height="16"></i>
+        <span data-lang-th="จองเลย" data-lang-en="Book Now">จองเลย</span>
+      </a>
+      <a href="#services" class="btn-ghost">
+        <span data-lang-th="ดูบริการทั้งหมด" data-lang-en="Explore Services">ดูบริการทั้งหมด</span>
+        <i data-lucide="arrow-right" width="15" height="15"></i>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <i data-lucide="chevron-down" width="16" height="16"></i>
+    <span data-lang-th="เลื่อนลง" data-lang-en="Scroll">เลื่อนลง</span>
+  </div>
+</section>
+
+<!-- Intro Narrative -->
+<section id="intro">
+  <div class="container">
+    <p class="intro-lede reveal" data-lang-th="การต่ออายุวีซ่าไม่ควรเป็นเรื่องน่าปวดหัว — <em>มันควรเป็นเรื่องง่ายๆ</em>" data-lang-en="Renewing your stay in Thailand shouldn't be stressful — <em>it should be seamless.</em>">การต่ออายุวีซ่าไม่ควรเป็นเรื่องน่าปวดหัว — <em>มันควรเป็นเรื่องง่ายๆ</em></p>
+    <p class="intro-body reveal reveal-delay-1" data-lang-th="เราเป็นทีมผู้เชี่ยวชาญด้านการเดินทางบอร์เดอร์รันในหัวหิน ด้วยประสบการณ์มากกว่า 10 ปี เราพาชาวต่างชาติหลายพันคนข้ามชายแดนไปกลับอย่างปลอดภัยและตรงเวลา ไม่ว่าคุณจะต้องการวีซ่าท่องเที่ยว วีซ่านักเรียน หรือเพียงต้องการ stamp เพิ่ม" data-lang-en="We are Hua Hin's most trusted border run specialists with over a decade of experience. We have helped thousands of expats and travellers cross the border safely and on schedule — whether for a tourist visa, student visa extension, or a simple re-entry stamp.">เราเป็นทีมผู้เชี่ยวชาญด้านการเดินทางบอร์เดอร์รันในหัวหิน ด้วยประสบการณ์มากกว่า 10 ปี เราพาชาวต่างชาติหลายพันคนข้ามชายแดนไปกลับอย่างปลอดภัยและตรงเวลา ไม่ว่าคุณจะต้องการวีซ่าท่องเที่ยว วีซ่านักเรียน หรือเพียงต้องการ stamp เพิ่ม</p>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <div class="container">
+    <div class="section-intro">
+      <p class="label" data-lang-th="บริการของเรา" data-lang-en="Our Services">บริการของเรา</p>
+      <h2 data-lang-th="ทุกสิ่งที่คุณต้องการ<br>เพื่ออยู่ในไทยต่อไป" data-lang-en="Everything You Need<br>to Stay in Thailand">ทุกสิ่งที่คุณต้องการ<br>เพื่ออยู่ในไทยต่อไป</h2>
+    </div>
+    <div class="accordion reveal">
+      <!-- Service 1 -->
+      <div class="accordion-item open">
+        <button class="accordion-header">
+          <div class="accordion-header-left">
+            <span class="accordion-num">01</span>
+            <span class="accordion-title" data-lang-th="บอร์เดอร์รัน (วันเดียว)" data-lang-en="Border Run (Same Day)">บอร์เดอร์รัน (วันเดียว)</span>
+          </div>
+          <span class="accordion-icon"><i data-lucide="plus" width="18" height="18"></i></span>
+        </button>
+        <div class="accordion-body">
+          <p data-lang-th="เดินทางจากหัวหินไปยังชายแดนพม่าหรือกัมพูชา รับ stamp ใหม่ และกลับมาในวันเดียวกัน เหมาะสำหรับผู้ที่ต้องการอยู่ในไทยต่อโดยไม่ต้องขอวีซ่าใหม่" data-lang-en="Travel from Hua Hin to the Myanmar or Cambodia border, collect your re-entry stamp, and return the same day. Ideal for those who want to extend their stay without applying for a new visa.">เดินทางจากหัวหินไปยังชายแดนพม่าหรือกัมพูชา รับ stamp ใหม่ และกลับมาในวันเดียวกัน เหมาะสำหรับผู้ที่ต้องการอยู่ในไทยต่อโดยไม่ต้องขอวีซ่าใหม่</p>
+          <ul>
+            <li data-lang-th="ออกเดินทาง 06:00 น. กลับถึงหัวหิน ~18:00 น." data-lang-en="Depart 06:00, return to Hua Hin ~18:00">ออกเดินทาง 06:00 น. กลับถึงหัวหิน ~18:00 น.</li>
+            <li data-lang-th="รถตู้ปรับอากาศ พร้อมไกด์ผู้ชำนาญ" data-lang-en="Air-conditioned minivan with experienced guide">รถตู้ปรับอากาศ พร้อมไกด์ผู้ชำนาญ</li>
+            <li data-lang-th="ช่วยกรอกเอกสารและแนะนำขั้นตอน" data-lang-en="Document assistance and step-by-step guidance">ช่วยกรอกเอกสารและแนะนำขั้นตอน</li>
+            <li data-lang-th="ราคาเริ่มต้น 1,200 บาทต่อท่าน" data-lang-en="Starting from 1,200 THB per person">ราคาเริ่มต้น 1,200 บาทต่อท่าน</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Service 2 -->
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <div class="accordion-header-left">
+            <span class="accordion-num">02</span>
+            <span class="accordion-title" data-lang-th="วีซ่ารัน (ยื่นวีซ่าใหม่)" data-lang-en="Visa Run (New Visa Application)">วีซ่ารัน (ยื่นวีซ่าใหม่)</span>
+          </div>
+          <span class="accordion-icon"><i data-lucide="plus" width="18" height="18"></i></span>
+        </button>
+        <div class="accordion-body">
+          <p data-lang-th="เดินทางไปยังสถานทูตหรือสถานกงสุลไทยในประเทศเพื่อนบ้าน เพื่อยื่นขอวีซ่าประเภทต่างๆ เช่น TR, ED, Non-B และกลับมาพร้อมวีซ่าใหม่" data-lang-en="Travel to a Thai embassy or consulate in a neighbouring country to apply for a new visa — TR, ED, Non-B, and more — then return with a fresh visa in your passport.">เดินทางไปยังสถานทูตหรือสถานกงสุลไทยในประเทศเพื่อนบ้าน เพื่อยื่นขอวีซ่าประเภทต่างๆ เช่น TR, ED, Non-B และกลับมาพร้อมวีซ่าใหม่</p>
+          <ul>
+            <li data-lang-th="วีซ่าท่องเที่ยว (TR) — 60 วัน ต่อได้ 30 วัน" data-lang-en="Tourist Visa (TR) — 60 days, extendable 30 days">วีซ่าท่องเที่ยว (TR) — 60 วัน ต่อได้ 30 วัน</li>
+            <li data-lang-th="วีซ่านักเรียน (ED) — เหมาะสำหรับผู้เรียนภาษาหรือมวยไทย" data-lang-en="Student Visa (ED) — for language or Muay Thai students">วีซ่านักเรียน (ED) — เหมาะสำหรับผู้เรียนภาษาหรือมวยไทย</li>
+            <li data-lang-th="วีซ่าธุรกิจ (Non-B) — สำหรับผู้ทำงานในไทย" data-lang-en="Business Visa (Non-B) — for those working in Thailand">วีซ่าธุรกิจ (Non-B) — สำหรับผู้ทำงานในไทย</li>
+            <li data-lang-th="บริการค้างคืนพร้อมที่พัก (กรณีรอรับวีซ่า)" data-lang-en="Overnight service with accommodation (when required)">บริการค้างคืนพร้อมที่พัก (กรณีรอรับวีซ่า)</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Service 3 -->
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <div class="accordion-header-left">
+            <span class="accordion-num">03</span>
+            <span class="accordion-title" data-lang-th="ต่ออายุวีซ่าที่สำนักงานตรวจคนเข้าเมือง" data-lang-en="In-Country Visa Extension">ต่ออายุวีซ่าที่สำนักงานตรวจคนเข้าเมือง</span>
+          </div>
+          <span class="accordion-icon"><i data-lucide="plus" width="18" height="18"></i></span>
+        </button>
+        <div class="accordion-body">
+          <p data-lang-th="ไม่อยากออกนอกประเทศ? เราช่วยยื่นขอต่ออายุวีซ่าหรือ permission to stay ที่สำนักงานตรวจคนเข้าเมืองหัวหินหรือประจวบคีรีขันธ์ พร้อมเตรียมเอกสารครบถ้วน" data-lang-en="Don't want to leave Thailand? We can assist with in-country extensions of your permission to stay at the Hua Hin or Prachuap Khiri Khan immigration office — documents prepared and filed for you.">ไม่อยากออกนอกประเทศ? เราช่วยยื่นขอต่ออายุวีซ่าหรือ permission to stay ที่สำนักงานตรวจคนเข้าเมืองหัวหินหรือประจวบคีรีขันธ์ พร้อมเตรียมเอกสารครบถ้วน</p>
+          <ul>
+            <li data-lang-th="ต่อได้สูงสุด 30 วันต่อครั้ง" data-lang-en="Extendable up to 30 days at a time">ต่อได้สูงสุด 30 วันต่อครั้ง</li>
+            <li data-lang-th="เตรียมเอกสารและกรอกแบบฟอร์มให้ครบ" data-lang-en="Full document preparation and form completion">เตรียมเอกสารและกรอกแบบฟอร์มให้ครบ</li>
+            <li data-lang-th="ค่าบริการ 800 บาท (ไม่รวมค่าธรรมเนียม Immigration)" data-lang-en="Service fee 800 THB (immigration fee not included)">ค่าบริการ 800 บาท (ไม่รวมค่าธรรมเนียม Immigration)</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Service 4 -->
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <div class="accordion-header-left">
+            <span class="accordion-num">04</span>
+            <span class="accordion-title" data-lang-th="รายงานตัว 90 วัน" data-lang-en="90-Day Reporting">รายงานตัว 90 วัน</span>
+          </div>
+          <span class="accordion-icon"><i data-lucide="plus" width="18" height="18"></i></span>
+        </button>
+        <div class="accordion-body">
+          <p data-lang-th="ผู้พักอาศัยระยะยาวในไทยจำเป็นต้องรายงานตัวทุก 90 วัน เราดูแลกระบวนการทั้งหมดให้คุณ ทั้งแบบออนไลน์และการไปรายงานตัวที่สำนักงาน" data-lang-en="Long-stay residents must report to immigration every 90 days. We handle the entire process — online or in person — so you never miss a deadline.">ผู้พักอาศัยระยะยาวในไทยจำเป็นต้องรายงานตัวทุก 90 วัน เราดูแลกระบวนการทั้งหมดให้คุณ ทั้งแบบออนไลน์และการไปรายงานตัวที่สำนักงาน</p>
+          <ul>
+            <li data-lang-th="บริการแจ้งเตือนล่วงหน้า 7 วัน" data-lang-en="7-day advance reminder service">บริการแจ้งเตือนล่วงหน้า 7 วัน</li>
+            <li data-lang-th="ยื่นออนไลน์หรือตัวแทนไปรายงานตัวแทน" data-lang-en="Online filing or in-person proxy reporting">ยื่นออนไลน์หรือตัวแทนไปรายงานตัวแทน</li>
+            <li data-lang-th="ค่าบริการ 500 บาท" data-lang-en="Service fee 500 THB">ค่าบริการ 500 บาท</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section id="process">
+  <div class="container">
+    <div class="section-intro">
+      <p class="label" data-lang-th="ขั้นตอนการใช้บริการ" data-lang-en="How It Works">ขั้นตอนการใช้บริการ</p>
+      <h2 data-lang-th="ง่าย ชัดเจน<br>ไม่มีอะไรซับซ้อน" data-lang-en="Simple, Clear,<br>No Surprises">ง่าย ชัดเจน<br>ไม่มีอะไรซับซ้อน</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3 data-lang-th="ติดต่อและแจ้งความต้องการ" data-lang-en="Contact Us & Tell Us What You Need">ติดต่อและแจ้งความต้องการ</h3>
+          <p data-lang-th="ทักหาเราผ่าน LINE, WhatsApp หรือโทรศัพท์ แจ้งประเภทวีซ่า สัญชาติ และวันที่ต้องการเดินทาง เราจะแนะนำเส้นทางที่เหมาะสมที่สุดสำหรับคุณ" data-lang-en="Reach us via LINE, WhatsApp, or phone. Tell us your visa type, nationality, and preferred travel date. We'll recommend the best route and option for your situation.">ทักหาเราผ่าน LINE, WhatsApp หรือโทรศัพท์ แจ้งประเภทวีซ่า สัญชาติ และวันที่ต้องการเดินทาง เราจะแนะนำเส้นทางที่เหมาะสมที่สุดสำหรับคุณ</p>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3 data-lang-th="ยืนยันจองและเตรียมเอกสาร" data-lang-en="Confirm Booking & Prepare Documents">ยืนยันจองและเตรียมเอกสาร</h3>
+          <p data-lang-th="ชำระมัดจำเพื่อยืนยันที่นั่ง เราส่งรายการเอกสารที่ต้องเตรียมให้คุณอย่างชัดเจน พร้อมตอบทุกคำถามก่อนวันเดินทาง" data-lang-en="Pay a deposit to secure your seat. We'll send you a clear checklist of required documents and answer any questions before your travel day.">ชำระมัดจำเพื่อยืนยันที่นั่ง เราส่งรายการเอกสารที่ต้องเตรียมให้คุณอย่างชัดเจน พร้อมตอบทุกคำถามก่อนวันเดินทาง</p>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3 data-lang-th="ขึ้นรถและปล่อยทุกอย่างให้เรา" data-lang-en="Board the Van & Leave It to Us">ขึ้นรถและปล่อยทุกอย่างให้เรา</h3>
+          <p data-lang-th="เราไปรับถึงที่พักหรือจุดนัดพบในหัวหิน รถตู้สะอาดสบาย ไกด์ผู้ชำนาญดูแลตลอดการเดินทาง คุณแค่นั่งผ่อนคลาย" data-lang-en="We pick you up from your accommodation or a central Hua Hin meeting point. Our clean, comfortable minivan and experienced guide take care of everything on the road.">เราไปรับถึงที่พักหรือจุดนัดพบในหัวหิน รถตู้สะอาดสบาย ไกด์ผู้ชำนาญดูแลตลอดการเดินทาง คุณแค่นั่งผ่อนคลาย</p>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3 data-lang-th="ข้ามชายแดนและรับ stamp ใหม่" data-lang-en="Cross the Border & Collect Your Stamp">ข้ามชายแดนและรับ stamp ใหม่</h3>
+          <p data-lang-th="ไกด์ของเราจะช่วยนำทางทุกขั้นตอนที่ด่านชายแดน ให้แน่ใจว่าเอกสารครบถ้วนและกระบวนการราบรื่น ก่อนนำคุณกลับถึงหัวหินอย่างปลอดภัย" data-lang-en="Our guide walks you through every step at the border checkpoint — making sure your documents are correct and the process runs smoothly — before bringing you safely back to Hua Hin.">ไกด์ของเราจะช่วยนำทางทุกขั้นตอนที่ด่านชายแดน ให้แน่ใจว่าเอกสารครบถ้วนและกระบวนการราบรื่น ก่อนนำคุณกลับถึงหัวหินอย่างปลอดภัย</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Us -->
+<section id="why">
+  <div class="container">
+    <div class="section-intro">
+      <p class="label" data-lang-th="ทำไมต้องเลือกเรา" data-lang-en="Why Choose Us">ทำไมต้องเลือกเรา</p>
+      <h2 data-lang-th="ความเชื่อใจที่สร้างขึ้น<br>จากประสบการณ์จริง" data-lang-en="Trust Built from<br>Real Experience">ความเชื่อใจที่สร้างขึ้น<br>จากประสบการณ์จริง</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="why-img">
+          <img src="https://images.unsplash.com/photo-1679340999599-599f2f1f6331?w=800&h=600&fit=crop" alt="Thai passport in hand">
+        </div>
+        <div class="why-text">
+          <p class="label" data-lang-th="ประสบการณ์มากกว่า 10 ปี" data-lang-en="Over 10 Years of Experience">ประสบการณ์มากกว่า 10 ปี</p>
+          <h3 data-lang-th="เราทำสิ่งนี้มาก่อนที่คนอื่นจะรู้จักหัวหิน" data-lang-en="We Were Here Before Hua Hin Was on the Map">เราทำสิ่งนี้มาก่อนที่คนอื่นจะรู้จักหัวหิน</h3>
+          <p data-lang-th="ทีมงานของเราทำงานด้านวีซ่ารันในหัวหินมาตั้งแต่ปี 2013 เราเคยเผชิญและแก้ไขปัญหาทุกรูปแบบที่อาจเกิดขึ้นที่ชายแดน ความเชี่ยวชาญของเราช่วยให้คุณไม่ต้องเรียนรู้จากความผิดพลาด" data-lang-en="Our team has been running Hua Hin's border trips since 2013. We've encountered and solved every possible issue that can arise at the border. Our expertise means you learn from our experience, not your own mistakes.">ทีมงานของเราทำงานด้านวีซ่ารันในหัวหินมาตั้งแต่ปี 2013 เราเคยเผชิญและแก้ไขปัญหาทุกรูปแบบที่อาจเกิดขึ้นที่ชายแดน ความเชี่ยวชาญของเราช่วยให้คุณไม่ต้องเรียนรู้จากความผิดพลาด</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-img">
+          <img src="https://images.unsplash.com/photo-1454496406107-dc34337da8d6?w=800&h=600&fit=crop" alt="Passport and travel documents">
+        </div>
+        <div class="why-text">
+          <p class="label" data-lang-th="ข้อมูลที่ถูกต้องและทันสมัย" data-lang-en="Up-to-Date, Accurate Information">ข้อมูลที่ถูกต้องและทันสมัย</p>
+          <h3 data-lang-th="กฎระเบียบเปลี่ยน เราอัปเดตก่อนใคร" data-lang-en="When the Rules Change, We Know First">กฎระเบียบเปลี่ยน เราอัปเดตก่อนใคร</h3>
+          <p data-lang-th="กฎวีซ่าไทยและขั้นตอนชายแดนเปลี่ยนแปลงบ่อยครั้ง เราติดตามทุกการเปลี่ยนแปลงอย่างใกล้ชิด และส่งข้อมูลที่ถูกต้องให้คุณเสมอ ไม่มีความประหลาดใจที่ไม่พึงประสงค์" data-lang-en="Thai visa rules and border procedures change frequently. We monitor every update closely and always give you accurate, current information — no unpleasant surprises.">กฎวีซ่าไทยและขั้นตอนชายแดนเปลี่ยนแปลงบ่อยครั้ง เราติดตามทุกการเปลี่ยนแปลงอย่างใกล้ชิด และส่งข้อมูลที่ถูกต้องให้คุณเสมอ ไม่มีความประหลาดใจที่ไม่พึงประสงค์</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-img">
+          <img src="https://images.unsplash.com/photo-1651376318405-f1055f37a511?w=800&h=600&fit=crop" alt="Hua Hin resort">
+        </div>
+        <div class="why-text">
+          <p class="label" data-lang-th="ใส่ใจทุกรายละเอียด" data-lang-en="Attentive to Every Detail">ใส่ใจทุกรายละเอียด</p>
+          <h3 data-lang-th="บริการแบบส่วนตัว ไม่ใช่แค่การขนส่ง" data-lang-en="Personal Service, Not Just Transportation">บริการแบบส่วนตัว ไม่ใช่แค่การขนส่ง</h3>
+          <p data-lang-th="เราไม่ได้แค่ขับรถพาคุณไป — เราดูแลคุณตลอดกระบวนการ ตั้งแต่การเตรียมเอกสาร การให้คำแนะนำส่วนตัว ไปจนถึงการติดตามสถานะหลังกลับมา" data-lang-en="We don't just drive you there — we care for you through the whole process, from document preparation and personal guidance to following up after your return.">เราไม่ได้แค่ขับรถพาคุณไป — เราดูแลคุณตลอดกระบวนการ ตั้งแต่การเตรียมเอกสาร การให้คำแนะนำส่วนตัว ไปจนถึงการติดตามสถานะหลังกลับมา</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Destinations -->
+<section id="destinations">
+  <div class="container">
+    <div class="section-intro">
+      <p class="label" data-lang-th="จุดหมายปลายทาง" data-lang-en="Destinations">จุดหมายปลายทาง</p>
+      <h2 data-lang-th="เส้นทางที่เราให้บริการ" data-lang-en="Routes We Operate">เส้นทางที่เราให้บริการ</h2>
+    </div>
+    <div class="dest-list reveal">
+      <div class="dest-item">
+        <div class="dest-left">
+          <div class="dest-icon"><i data-lucide="map-pin" width="16" height="16"></i></div>
+          <div>
+            <div class="dest-name" data-lang-th="ด่านสิงขร, พม่า" data-lang-en="Singkhon Border, Myanmar">ด่านสิงขร, พม่า</div>
+            <div class="dest-sub" data-lang-th="ใกล้ที่สุดจากหัวหิน · ~3.5 ชม." data-lang-en="Closest from Hua Hin · ~3.5 hrs">ใกล้ที่สุดจากหัวหิน · ~3.5 ชม.</div>
+          </div>
+        </div>
+        <span class="dest-tag" data-lang-th="แนะนำ" data-lang-en="Recommended">แนะนำ</span>
+      </div>
+      <div class="dest-item">
+        <div class="dest-left">
+          <div class="dest-icon"><i data-lucide="map-pin" width="16" height="16"></i></div>
+          <div>
+            <div class="dest-name" data-lang-th="ด่านเจดีย์สามองค์, พม่า" data-lang-en="Three Pagodas Pass, Myanmar">ด่านเจดีย์สามองค์, พม่า</div>
+            <div class="dest-sub" data-lang-th="กาญจนบุรี · ~5 ชม." data-lang-en="Kanchanaburi · ~5 hrs">กาญจนบุรี · ~5 ชม.</div>
+          </div>
+        </div>
+        <span class="dest-tag" data-lang-th="ยอดนิยม" data-lang-en="Popular">ยอดนิยม</span>
+      </div>
+      <div class="dest-item">
+        <div class="dest-left">
+          <div class="dest-icon"><i data-lucide="map-pin" width="16" height="16"></i></div>
+          <div>
+            <div class="dest-name" data-lang-th="ด่านอรัญประเทศ, กัมพูชา" data-lang-en="Aranyaprathet, Cambodia">ด่านอรัญประเทศ, กัมพูชา</div>
+            <div class="dest-sub" data-lang-th="ปราจีนบุรี · ~5.5 ชม." data-lang-en="Prachinburi · ~5.5 hrs">ปราจีนบุรี · ~5.5 ชม.</div>
+          </div>
+        </div>
+        <span class="dest-tag" data-lang-th="ยื่นวีซ่า" data-lang-en="Visa Run">ยื่นวีซ่า</span>
+      </div>
+      <div class="dest-item">
+        <div class="dest-left">
+          <div class="dest-icon"><i data-lucide="map-pin" width="16" height="16"></i></div>
+          <div>
+            <div class="dest-name" data-lang-th="กัวลาลัมเปอร์, มาเลเซีย" data-lang-en="Kuala Lumpur, Malaysia">กัวลาลัมเปอร์, มาเลเซีย</div>
+            <div class="dest-sub" data-lang-th="บินหรือรถ · สถานทูตไทย" data-lang-en="Fly or drive · Thai Embassy">บินหรือรถ · สถานทูตไทย</div>
+          </div>
+        </div>
+        <span class="dest-tag" data-lang-th="วีซ่าใหม่" data-lang-en="New Visa">วีซ่าใหม่</span>
+      </div>
+      <div class="dest-item">
+        <div class="dest-left">
+          <div class="dest-icon"><i data-lucide="map-pin" width="16" height="16"></i></div>
+          <div>
+            <div class="dest-name" data-lang-th="เวียงจันทน์, ลาว" data-lang-en="Vientiane, Laos">เวียงจันทน์, ลาว</div>
+            <div class="dest-sub" data-lang-th="สถานทูตไทย ยื่นวีซ่าระยะยาว" data-lang-en="Thai Embassy, long-stay visas">สถานทูตไทย ยื่นวีซ่าระยะยาว</div>
+          </div>
+        </div>
+        <span class="dest-tag" data-lang-th="Non-B / ED" data-lang-en="Non-B / ED">Non-B / ED</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-intro">
+      <p class="label" data-lang-th="เสียงจากลูกค้า" data-lang-en="Client Stories">เสียงจากลูกค้า</p>
+      <h2 data-lang-th="พวกเขาวางใจเรา<br>คุณก็วางใจเราได้" data-lang-en="They Trusted Us.<br>You Can Too.">พวกเขาวางใจเรา<br>คุณก็วางใจเราได้</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+        </div>
+        <p class="testi-text" data-lang-th="&ldquo;ใช้บริการมาหลายครั้งแล้ว ทุกครั้งราบรื่นมาก ทีมงานรู้ทุกอย่างเกี่ยวกับการข้ามแดน ไม่เคยมีปัญหาเลยสักครั้ง&rdquo;" data-lang-en="&ldquo;Used them several times now. Each trip has been completely smooth. The team knows everything about the crossing process — not a single issue ever.&rdquo;">&ldquo;ใช้บริการมาหลายครั้งแล้ว ทุกครั้งราบรื่นมาก ทีมงานรู้ทุกอย่างเกี่ยวกับการข้ามแดน ไม่เคยมีปัญหาเลยสักครั้ง&rdquo;</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MR</div>
+          <div>
+            <div class="testi-name">Marcus R.</div>
+            <div class="testi-origin" data-lang-th="ชาวเยอรมัน อยู่หัวหิน 3 ปี" data-lang-en="German, 3 years in Hua Hin">ชาวเยอรมัน อยู่หัวหิน 3 ปี</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+        </div>
+        <p class="testi-text" data-lang-th="&ldquo;ครั้งแรกที่ทำบอร์เดอร์รัน กังวลมากเพราะไม่รู้ขั้นตอน แต่ไกด์ช่วยดูแลทุกอย่าง อธิบายชัดเจนทุกขั้นตอน ราคาก็ยุติธรรมมาก&rdquo;" data-lang-en="&ldquo;My first border run — I was worried because I had no idea what to expect. The guide took care of everything and explained each step clearly. Very fair pricing.&rdquo;">&ldquo;ครั้งแรกที่ทำบอร์เดอร์รัน กังวลมากเพราะไม่รู้ขั้นตอน แต่ไกด์ช่วยดูแลทุกอย่าง อธิบายชัดเจนทุกขั้นตอน ราคาก็ยุติธรรมมาก&rdquo;</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SL</div>
+          <div>
+            <div class="testi-name">Sophie L.</div>
+            <div class="testi-origin" data-lang-th="ชาวฝรั่งเศส สอนภาษาอังกฤษที่หัวหิน" data-lang-en="French, English teacher in Hua Hin">ชาวฝรั่งเศส สอนภาษาอังกฤษที่หัวหิน</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+          <i data-lucide="star" width="14" height="14"></i>
+        </div>
+        <p class="testi-text" data-lang-th="&ldquo;เกษียณแล้วอยู่หัวหินมา 5 ปี ใช้บริการ VisaHuaHin ทุกครั้ง ทั้ง border run และรายงานตัว 90 วัน ไม่เคยต้องกังวลเรื่องวีซ่าอีกเลย&rdquo;" data-lang-en="&ldquo;Retired and living in Hua Hin for 5 years. I use VisaHuaHin every time for both border runs and 90-day reports. I never have to worry about visa matters anymore.&rdquo;">&ldquo;เกษียณแล้วอยู่หัวหินมา 5 ปี ใช้บริการ VisaHuaHin ทุกครั้ง ทั้ง border run และรายงานตัว 90 วัน ไม่เคยต้องกังวลเรื่องวีซ่าอีกเลย&rdquo;</p>
+        <div class="testi-author">
+          <div class="testi-avatar">GH</div>
+          <div>
+            <div class="testi-name">George H.</div>
+            <div class="testi-origin" data-lang-th="ชาวออสเตรเลีย เกษียณอายุ" data-lang-en="Australian, retired">ชาวออสเตรเลีย เกษียณอายุ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-intro">
+      <p class="label" data-lang-th="คำถามที่พบบ่อย" data-lang-en="Frequently Asked Questions">คำถามที่พบบ่อย</p>
+      <h2 data-lang-th="คำตอบที่คุณ<br>อาจกำลังมองหา" data-lang-en="Answers You May<br>Be Looking For">คำตอบที่คุณ<br>อาจกำลังมองหา</h2>
+    </div>
+    <div class="accordion reveal">
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <div class="accordion-header-left">
+            <span class="accordion-num">Q</span>
+            <span class="accordion-title" data-lang-th="ต้องจองล่วงหน้ากี่วัน?" data-lang-en="How far in advance should I book?">ต้องจองล่วงหน้ากี่วัน?</span>
+          </div>
+          <span class="accordion-icon"><i data-lucide="plus" width="18" height="18"></i></span>
+        </button>
+        <div class="accordion-body">
+          <p data-lang-th="แนะนำให้จองล่วงหน้าอย่างน้อย 2–3 วัน เนื่องจากที่นั่งมีจำกัด โดยเฉพาะช่วงวันหยุดและปลายเดือน หากมีความจำเป็นเร่งด่วน ทักมาหาเราได้เลย เราจะพยายามช่วยเหลือ" data-lang-en="We recommend booking at least 2–3 days in advance, as seats are limited — especially around public holidays and end-of-month rush periods. For urgent requests, contact us anyway and we'll do our best.">แนะนำให้จองล่วงหน้าอย่างน้อย 2–3 วัน เนื่องจากที่นั่งมีจำกัด โดยเฉพาะช่วงวันหยุดและปลายเดือน หากมีความจำเป็นเร่งด่วน ทักมาหาเราได้เลย เราจะพยายามช่วยเหลือ</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <div class="accordion-header-left">
+            <span class="accordion-num">Q</span>
+            <span class="accordion-title" data-lang-th="ต้องเตรียมเอกสารอะไรบ้าง?" data-lang-en="What documents do I need to bring?">ต้องเตรียมเอกสารอะไรบ้าง?</span>
+          </div>
+          <span class="accordion-icon"><i data-lucide="plus" width="18" height="18"></i></span>
+        </button>
+        <div class="accordion-body">
+          <p data-lang-th="สำหรับบอร์เดอร์รันทั่วไป คุณต้องมี: พาสปอร์ต (อายุเหลืออย่างน้อย 6 เดือน), รูปถ่ายหน้าตรง 2 ใบ, เงินสด (สกุลท้องถิ่นหรือดอลลาร์สหรัฐ สำหรับค่าธรรมเนียมชายแดน) หลังจากยืนยันจอง เราจะส่งรายการเอกสารฉบับเต็มให้คุณอีกครั้ง" data-lang-en="For a standard border run you need: a passport valid for at least 6 months, 2 passport-sized photos, and cash (local currency or USD for border fees). After booking we will send you a complete, tailored document list.">สำหรับบอร์เดอร์รันทั่วไป คุณต้องมี: พาสปอร์ต (อายุเหลืออย่างน้อย 6 เดือน), รูปถ่ายหน้าตรง 2 ใบ, เงินสด (สกุลท้องถิ่นหรือดอลลาร์สหรัฐ สำหรับค่าธรรมเนียมชายแดน) หลังจากยืนยันจอง เราจะส่งรายการเอกสารฉบับเต็มให้คุณอีกครั้ง</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <div class="accordion-header-left">
+            <span class="accordion-num">Q</span>
+            <span class="accordion-title" data-lang-th="ถ้าถูกปฏิเสธที่ชายแดนจะเกิดอะไรขึ้น?" data-lang-en="What happens if I'm refused at the border?">ถ้าถูกปฏิเสธที่ชายแดนจะเกิดอะไรขึ้น?</span>
+          </div>
+          <span class="accordion-icon"><i data-lucide="plus" width="18" height="18"></i></span>
+        </button>
+        <div class="accordion-body">
+          <p data-lang-th="แม้จะเป็นกรณีที่พบได้น้อยมาก เราจะช่วยประเมินสถานการณ์และหาทางเลือกทันที ไม่ว่าจะเป็นการลองด่านอื่น หรือแนะนำขั้นตอนถัดไปกับสำนักงานตรวจคนเข้าเมือง เราไม่ทิ้งลูกค้าไว้กลางทาง" data-lang-en="Though very rare when travelling with us, if this happens we immediately assess the situation and find alternatives — whether that means trying a different crossing or advising on the next steps with immigration. We never leave a client stranded.">แม้จะเป็นกรณีที่พบได้น้อยมาก เราจะช่วยประเมินสถานการณ์และหาทางเลือกทันที ไม่ว่าจะเป็นการลองด่านอื่น หรือแนะนำขั้นตอนถัดไปกับสำนักงานตรวจคนเข้าเมือง เราไม่ทิ้งลูกค้าไว้กลางทาง</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <div class="accordion-header-left">
+            <span class="accordion-num">Q</span>
+            <span class="accordion-title" data-lang-th="บอร์เดอร์รันทำได้บ่อยแค่ไหน?" data-lang-en="How often can I do a border run?">บอร์เดอร์รันทำได้บ่อยแค่ไหน?</span>
+          </div>
+          <span class="accordion-icon"><i data-lucide="plus" width="18" height="18"></i></span>
+        </button>
+        <div class="accordion-body">
+          <p data-lang-th="กฎระเบียบปัจจุบันอนุญาตให้ทำบอร์เดอร์รันได้ 2 ครั้งต่อปี (เข้าไทยทางบกหรือทางเรือ) ก่อนที่เจ้าหน้าที่อาจตั้งคำถาม สำหรับผู้อยู่อาศัยระยะยาว เราแนะนำให้พิจารณาขอวีซ่าประเภทอื่นที่เหมาะสมกว่า เราให้คำปรึกษาฟรี" data-lang-en="Current guidelines generally allow up to 2 land/sea border entries per year before immigration may question your intent. For long-term residents, we advise considering a more appropriate visa category. We offer free consultations.">กฎระเบียบปัจจุบันอนุญาตให้ทำบอร์เดอร์รันได้ 2 ครั้งต่อปี (เข้าไทยทางบกหรือทางเรือ) ก่อนที่เจ้าหน้าที่อาจตั้งคำถาม สำหรับผู้อยู่อาศัยระยะยาว เราแนะนำให้พิจารณาขอวีซ่าประเภทอื่นที่เหมาะสมกว่า เราให้คำปรึกษาฟรี</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact CTA -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrap reveal">
+      <p class="label" data-lang-th="ติดต่อเรา" data-lang-en="Get in Touch">ติดต่อเรา</p>
+      <h2 data-lang-th="พร้อมให้บริการคุณ<br>ทุกวัน 08:00–20:00 น." data-lang-en="Ready to Help You<br>Every Day, 08:00–20:00">พร้อมให้บริการคุณ<br>ทุกวัน 08:00–20:00 น.</h2>
+      <p data-lang-th="ติดต่อเราผ่านช่องทางที่คุณสะดวก เราตอบภาษาไทย อังกฤษ ด้วยใจ ไม่มีคำถามไหนที่โง่เกินไป" data-lang-en="Reach us through whichever channel suits you. We reply in Thai and English, genuinely. No question is too basic.">ติดต่อเราผ่านช่องทางที่คุณสะดวก เราตอบภาษาไทย อังกฤษ ด้วยใจ ไม่มีคำถามไหนที่โง่เกินไป</p>
+      <div class="contact-channels">
+        <a href="https://line.me/ti/p/~@visahuahin" class="channel-btn ch-line" target="_blank" rel="noopener">
+          <i data-lucide="message-circle" width="18" height="18"></i>
+          <span data-lang-th="แอด LINE" data-lang-en="Add on LINE">แอด LINE</span>
+        </a>
+        <a href="https://wa.me/66800000000" class="channel-btn ch-whatsapp" target="_blank" rel="noopener">
+          <i data-lucide="message-square" width="18" height="18"></i>
+          <span data-lang-th="WhatsApp" data-lang-en="WhatsApp">WhatsApp</span>
+        </a>
+        <a href="tel:+66800000000" class="channel-btn ch-phone">
+          <i data-lucide="phone" width="18" height="18"></i>
+          <span data-lang-th="โทรหาเรา" data-lang-en="Call Us">โทรหาเรา</span>
+        </a>
+        <a href="mailto:hello@visahuahin.com" class="channel-btn ch-email">
+          <i data-lucide="mail" width="18" height="18"></i>
+          <span data-lang-th="ส่งอีเมล" data-lang-en="Send Email">ส่งอีเมล</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">Visa<span>HuaHin</span></div>
+      <p class="footer-tagline" data-lang-th="บริการวีซ่ารัน บอร์เดอร์รัน และงานเอกสารสำหรับชาวต่างชาติในหัวหิน ประเทศไทย" data-lang-en="Visa run, border run, and immigration document services for foreigners in Hua Hin, Thailand.">บริการวีซ่ารัน บอร์เดอร์รัน และงานเอกสารสำหรับชาวต่างชาติในหัวหิน ประเทศไทย</p>
+      <ul class="footer-links">
+        <li><a href="#services" data-lang-th="บริการ" data-lang-en="Services">บริการ</a></li>
+        <li><a href="#process" data-lang-th="ขั้นตอน" data-lang-en="How It Works">ขั้นตอน</a></li>
+        <li><a href="#destinations" data-lang-th="ปลายทาง" data-lang-en="Destinations">ปลายทาง</a></li>
+        <li><a href="#faq" data-lang-th="คำถามที่พบบ่อย" data-lang-en="FAQ">FAQ</a></li>
+        <li><a href="#contact" data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</a></li>
+      </ul>
+      <p class="footer-copy" data-lang-th="© 2025 VisaHuaHin · หัวหิน ประเทศไทย · ข้อมูลวีซ่าเป็นการให้คำแนะนำเท่านั้น ไม่ใช่คำแนะนำทางกฎหมาย" data-lang-en="© 2025 VisaHuaHin · Hua Hin, Thailand · Visa information is general guidance only, not legal advice.">© 2025 VisaHuaHin · หัวหิน ประเทศไทย · ข้อมูลวีซ่าเป็นการให้คำแนะนำเท่านั้น ไม่ใช่คำแนะนำทางกฎหมาย</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Lucide icons
+lucide.createIcons();
+
+// Navbar scroll
+(function(){
+  var nav = document.getElementById('navbar');
+  var rail = document.getElementById('side-rail');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 60){
+      nav.classList.add('scrolled');
+      rail.classList.add('visible');
+    } else {
+      nav.classList.remove('scrolled');
+      rail.classList.remove('visible');
+    }
+  }, {passive:true});
+})();
+
+// Hamburger / mobile menu
+(function(){
+  var btn = document.getElementById('ham-btn');
+  var menu = document.getElementById('mobile-menu');
+  var overlay = document.getElementById('menu-overlay');
+  function close(){
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  btn.addEventListener('click', function(){
+    var open = menu.classList.contains('open');
+    if(open){ close(); } else {
+      btn.classList.add('open');
+      menu.classList.add('open');
+      overlay.classList.add('open');
+    }
+  });
+  overlay.addEventListener('click', close);
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+
+// Hero background slow zoom
+(function(){
+  var bg = document.getElementById('hero-bg');
+  setTimeout(function(){ bg.classList.add('loaded'); }, 100);
+})();
+
+// Hero h1 HTML support (br + em)
+(function(){
+  var h1 = document.querySelector('#hero h1');
+  if(!h1) return;
+  function updateHero(lang){
+    var raw = h1.getAttribute('data-lang-' + lang);
+    if(raw) h1.innerHTML = raw;
+  }
+  // Patch lang switcher to also call updateHero
+  var origS = window.__heroLangUpdate = updateHero;
+  window.addEventListener('langchange', function(e){ updateHero(e.detail); });
+})();
+
+// Accordion
+(function(){
+  document.querySelectorAll('.accordion-header').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = this.closest('.accordion-item');
+      var isOpen = item.classList.contains('open');
+      // Close all in same accordion
+      var siblings = item.closest('.accordion').querySelectorAll('.accordion-item');
+      siblings.forEach(function(s){ s.classList.remove('open'); });
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+})();
+
+// Scroll reveal
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+// Smooth scroll for anchors
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    var id = this.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if(el){ e.preventDefault(); el.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+</script>
+
+<!-- Language Switcher -->
+<script>(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){e.textContent=t}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}// Also update hero h1 HTML
+var h1=document.querySelector('#hero h1');if(h1){var raw=h1.getAttribute('data-lang-'+l);if(raw)h1.innerHTML=raw;}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();</script>
+</body>
+</html>
